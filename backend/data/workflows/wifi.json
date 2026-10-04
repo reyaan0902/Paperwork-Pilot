@@ -26,5 +26,20 @@
       "needs_approval": true,
       "result": null
     }
+  ],
+  "required_fields": [
+    "Full name",
+    "Student ID",
+    "Device type",
+    "Device MAC address"
+  ],
+  "required_documents": [
+    "College ID card",
+    "Screenshot of the device MAC address"
+  ],
+  "steps": [
+    "Find your device's MAC address in network settings",
+    "Send the registration request to the IT department",
+    "Wait for confirmation, then connect to the campus network"
   ]
 }

@@ -59,3 +59,22 @@ def log_approval(plan_id: str, task_id: str, approved: bool) -> None:
         "approved": approved
     })
     _save_json(APPROVAL_LOG_FILE, logs)
+
+
+def list_plans(owner_id: str) -> list:
+    """Short summaries of one user's plans, newest first (for the sidebar)."""
+    plans = _load_json(PLANS_FILE, {})
+    rows = []
+    for p in plans.values():
+        if p.get("owner") != owner_id:
+            continue
+        live = [t for t in p.get("tasks", []) if not t.get("replaced")]
+        rows.append({
+            "plan_id": p["plan_id"],
+            "goal": p.get("goal", ""),
+            "updated_at": p.get("updated_at", ""),
+            "done": sum(1 for t in live if t["status"] == "done"),
+            "total": len(live),
+            "waiting": any(t["status"] == "needs_approval" for t in live),
+        })
+    return sorted(rows, key=lambda r: r["updated_at"], reverse=True)

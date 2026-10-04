@@ -34,5 +34,23 @@
       "needs_approval": false,
       "result": null
     }
+  ],
+  "required_fields": [
+    "Full name",
+    "Date of birth",
+    "Address",
+    "Phone number",
+    "Old passport number"
+  ],
+  "required_documents": [
+    "Old passport (original)",
+    "Photocopy of first and last pages",
+    "Address proof",
+    "Date of birth proof"
+  ],
+  "steps": [
+    "Fill in the renewal form on the passport portal",
+    "Pay the fee and book an appointment",
+    "Visit the passport office with your original documents"
   ]
 }
