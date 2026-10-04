@@ -1,0 +1,10 @@
+.env
+.venv/
+venv/
+__pycache__/
+node_modules/
+dist/
+backend/data/active_plans.json
+backend/data/approval_log.json
+backend/data/users.json
+backend/data/sessions.json

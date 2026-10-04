@@ -1,0 +1,56 @@
+{
+  "workflow_id": "passport_renewal",
+  "name": "Adult Passport Renewal",
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "Search eligibility criteria and current statutory rules",
+      "status": "pending",
+      "tool": "search_requirements",
+      "needs_approval": false,
+      "result": null
+    },
+    {
+      "id": "t2",
+      "title": "Compile mandatory verification documents checklist",
+      "status": "pending",
+      "tool": "make_checklist",
+      "needs_approval": false,
+      "result": null
+    },
+    {
+      "id": "t3",
+      "title": "Draft application summary and appointment slot request",
+      "status": "pending",
+      "tool": "draft_email",
+      "needs_approval": true,
+      "result": null
+    },
+    {
+      "id": "t4",
+      "title": "Schedule appointment notification alert",
+      "status": "pending",
+      "tool": "set_reminder",
+      "needs_approval": false,
+      "result": null
+    }
+  ],
+  "required_fields": [
+    "Full name",
+    "Date of birth",
+    "Address",
+    "Phone number",
+    "Old passport number"
+  ],
+  "required_documents": [
+    "Old passport (original)",
+    "Photocopy of first and last pages",
+    "Address proof",
+    "Date of birth proof"
+  ],
+  "steps": [
+    "Fill in the renewal form on the passport portal",
+    "Pay the fee and book an appointment",
+    "Visit the passport office with your original documents"
+  ]
+}

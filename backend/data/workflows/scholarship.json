@@ -1,0 +1,57 @@
+{
+  "workflow_id": "merit_scholarship",
+  "name": "State Merit Scholarship Application",
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "Verify academic eligibility cutoffs and portal deadline",
+      "status": "pending",
+      "tool": "search_requirements",
+      "needs_approval": false,
+      "result": null
+    },
+    {
+      "id": "t2",
+      "title": "Generate academic and income proof checklist",
+      "status": "pending",
+      "tool": "make_checklist",
+      "needs_approval": false,
+      "result": null
+    },
+    {
+      "id": "t3",
+      "title": "Draft scholarship justification and cover letter",
+      "status": "pending",
+      "tool": "draft_email",
+      "needs_approval": true,
+      "result": null
+    },
+    {
+      "id": "t4",
+      "title": "Set submission deadline reminders",
+      "status": "pending",
+      "tool": "set_reminder",
+      "needs_approval": false,
+      "result": null
+    }
+  ],
+  "required_fields": [
+    "Full name",
+    "Student ID",
+    "Course and year",
+    "Last exam percentage",
+    "Bank account holder name"
+  ],
+  "required_documents": [
+    "Last year's mark sheet",
+    "Income certificate",
+    "Admission or fee receipt",
+    "Bank passbook first page",
+    "Passport-size photo"
+  ],
+  "steps": [
+    "Create an account on the scholarship portal",
+    "Upload the documents and submit the form",
+    "Take a printout and keep the application number"
+  ]
+}
