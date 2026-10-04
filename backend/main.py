@@ -1,5 +1,5 @@
 import uuid
-
+import os
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPAuthorizationCredentials
@@ -13,9 +13,14 @@ from db import supabase
 app = FastAPI()
 
 # lets the React app (Vite runs on port 5173) talk to this server
+FRONTEND_ORIGINS = ["http://localhost:5173", "http://127.0.0.1:5173"]
+FRONTEND_ORIGINS += [
+    o.strip().rstrip("/") for o in os.getenv("FRONTEND_URL", "").split(",") if o.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=FRONTEND_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
 )
