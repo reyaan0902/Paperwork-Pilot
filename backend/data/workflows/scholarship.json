@@ -1,1 +1,38 @@
-
+{
+  "workflow_id": "merit_scholarship",
+  "name": "State Merit Scholarship Application",
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "Verify academic eligibility cutoffs and portal deadline",
+      "status": "pending",
+      "tool": "search_requirements",
+      "needs_approval": false,
+      "result": null
+    },
+    {
+      "id": "t2",
+      "title": "Generate academic and income proof checklist",
+      "status": "pending",
+      "tool": "make_checklist",
+      "needs_approval": false,
+      "result": null
+    },
+    {
+      "id": "t3",
+      "title": "Draft scholarship justification and cover letter",
+      "status": "pending",
+      "tool": "draft_email",
+      "needs_approval": true,
+      "result": null
+    },
+    {
+      "id": "t4",
+      "title": "Set submission deadline reminders",
+      "status": "pending",
+      "tool": "set_reminder",
+      "needs_approval": false,
+      "result": null
+    }
+  ]
+}

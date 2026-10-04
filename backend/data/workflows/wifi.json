@@ -1,1 +1,30 @@
-
+{
+  "workflow_id": "campus_wifi_access",
+  "name": "Campus Wi-Fi Registration & MAC Whitelist",
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "Query IT department device registration policy",
+      "status": "pending",
+      "tool": "search_requirements",
+      "needs_approval": false,
+      "result": null
+    },
+    {
+      "id": "t2",
+      "title": "Compile student ID and device MAC address requirements",
+      "status": "pending",
+      "tool": "make_checklist",
+      "needs_approval": false,
+      "result": null
+    },
+    {
+      "id": "t3",
+      "title": "Draft formal Wi-Fi access application to IT admin",
+      "status": "pending",
+      "tool": "draft_email",
+      "needs_approval": true,
+      "result": null
+    }
+  ]
+}
