@@ -1,5 +1,6 @@
-import uuid
 import os
+import uuid
+
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPAuthorizationCredentials
@@ -12,15 +13,21 @@ from db import supabase
 
 app = FastAPI()
 
-# lets the React app (Vite runs on port 5173) talk to this server
-FRONTEND_ORIGINS = ["http://localhost:5173", "http://127.0.0.1:5173"]
-FRONTEND_ORIGINS += [
-    o.strip().rstrip("/") for o in os.getenv("FRONTEND_URL", "").split(",") if o.strip()
+# Collect allowed origins for local dev, custom domain, and Vercel deployments
+FRONTEND_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
+if os.getenv("FRONTEND_URL"):
+    FRONTEND_ORIGINS += [
+        o.strip().rstrip("/") for o in os.getenv("FRONTEND_URL", "").split(",") if o.strip()
+    ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=FRONTEND_ORIGINS,
+    allow_origin_regex=r"^https:\/\/.*\.vercel\.app$",  # Allows all Vercel preview & production deployments
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -202,3 +209,4 @@ def _clean_url(url: str) -> str:
     if "." not in url.split("//", 1)[1]:
         raise HTTPException(status_code=400, detail="That website address does not look right")
     return url[:300]
+    
