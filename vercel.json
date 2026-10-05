@@ -1,25 +1,10 @@
 {
-  "builds": [
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    },
-    {
-      "src": "backend/main.py",
-      "use": "@vercel/python"
-    }
-  ],
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
   "rewrites": [
-    {
-      "source": "/(auth|plans|goals)(.*)",
-      "destination": "backend/main.py"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/frontend/$1"
-    }
+    { "source": "/auth/:path*", "destination": "/api/index" },
+    { "source": "/plans/:path*", "destination": "/api/index" },
+    { "source": "/plans", "destination": "/api/index" },
+    { "source": "/goals", "destination": "/api/index" }
   ]
 }
