@@ -9,19 +9,33 @@ PLANS_FILE = os.path.join(DATA_DIR, "active_plans.json")
 APPROVAL_LOG_FILE = os.path.join(DATA_DIR, "approval_log.json")
 
 
-def _load_json(filepath: str, default: any) -> any:
-    if not os.path.exists(filepath):
-        return default
-    with open(filepath, "r", encoding="utf-8") as f:
-        try:
-            return json.load(f)
-        except json.JSONDecodeError:
+def _is_template(filepath: str) -> bool:
+    """Bundled workflow templates are read-only files shipped with the code."""
+    return os.path.abspath(filepath).startswith(os.path.abspath(WORKFLOWS_DIR))
+
+
+def _load_json(filepath: str, default):
+    if _is_template(filepath):
+        if not os.path.exists(filepath):
             return default
+        with open(filepath, "r", encoding="utf-8") as f:
+            try:
+                return json.load(f)
+            except json.JSONDecodeError:
+                return default
+
+    # Everything else (users, sessions, plans, approval log) lives in Supabase
+    from db import supabase
+    key = os.path.basename(filepath)
+    res = supabase.table("kv").select("value").eq("key", key).execute()
+    return res.data[0]["value"] if res.data else default
 
 
-def _save_json(filepath: str, data: any) -> None:
-    with open(filepath, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+def _save_json(filepath: str, data) -> None:
+    from db import supabase
+    supabase.table("kv").upsert(
+        {"key": os.path.basename(filepath), "value": data}, on_conflict="key"
+    ).execute()
 
 
 def get_template(workflow_type: str) -> dict:
@@ -44,7 +58,7 @@ def save_plan(plan_data: dict) -> str:
 
 
 def get_plan(plan_id: str) -> dict:
-    """Returns a specific plan for Person 2's GET /plans/{plan_id} endpoint."""
+    """Returns a specific plan for GET /plans/{plan_id}."""
     plans = _load_json(PLANS_FILE, {})
     return plans.get(plan_id)
 
@@ -56,7 +70,7 @@ def log_approval(plan_id: str, task_id: str, approved: bool) -> None:
         "timestamp": datetime.utcnow().isoformat(),
         "plan_id": plan_id,
         "task_id": task_id,
-        "approved": approved
+        "approved": approved,
     })
     _save_json(APPROVAL_LOG_FILE, logs)
 
