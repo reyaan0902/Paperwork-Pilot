@@ -1,6 +1,9 @@
 // Talks to the FastAPI backend (backend/main.py).
-// Set VITE_API_URL in frontend/.env if the backend is not on this address.
-const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+// Uses relative paths in production on Vercel, or localhost in development.
+const API_BASE = import.meta.env.VITE_API_URL !== undefined 
+  ? import.meta.env.VITE_API_URL 
+  : (import.meta.env.PROD ? '' : 'http://127.0.0.1:8000');
+
 const TOKEN_KEY = 'paperwork_pilot_token';
 
 // The login token lives in the browser so you stay logged in after a refresh
