@@ -1,5 +1,9 @@
 import os
+import sys
 import uuid
+
+# Force Python to find modules located inside the backend directory
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -26,7 +30,7 @@ if os.getenv("FRONTEND_URL"):
 app.add_middleware(
     CORSMiddleware,
     allow_origins=FRONTEND_ORIGINS,
-    allow_origin_regex=r"^https:\/\/.*\.vercel\.app$",  # Allows all Vercel preview & production deployments
+    allow_origin_regex=r"^https:\/\/.*\.vercel\.app$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -209,4 +213,3 @@ def _clean_url(url: str) -> str:
     if "." not in url.split("//", 1)[1]:
         raise HTTPException(status_code=400, detail="That website address does not look right")
     return url[:300]
-    
